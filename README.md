@@ -1,4 +1,4 @@
-Markdown# magi-but-chatgpt-gemini-deepseek
+# magi-but-chatgpt-gemini-deepseek
 
 ![Status: Work in Progress](https://img.shields.io/badge/status-WIP--Planning-orange)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
