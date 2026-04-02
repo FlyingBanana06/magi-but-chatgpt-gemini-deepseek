@@ -50,5 +50,3 @@ pip install -e .
 此專案純屬技術研究，旨在探索不同 LLM 供應商之間的「集體智慧」極限。
 Inspired by Neon Genesis Evangelion.
 God's in his heaven. All's right with the world.
-
----
