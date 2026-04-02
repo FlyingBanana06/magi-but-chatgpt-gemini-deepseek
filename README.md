@@ -1,100 +1,57 @@
-# MAGI — Disagreement OS for LLMs
+Markdown# magi-but-chatgpt-gemini-deepseek
 
-Three models. One decision. Inspired by the [MAGI supercomputer](https://evangelion.fandom.com/wiki/MAGI) from Neon Genesis Evangelion.
+![Status: Work in Progress](https://img.shields.io/badge/status-WIP--Planning-orange)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+![Theme: Evangelion](https://img.shields.io/badge/inspired--by-Evangelion-blue)
 
-MAGI is not another agent framework. It is a **structured disagreement engine**: the same question goes to three different LLMs, each with a different perspective. They vote, debate, and critique each other to produce a Decision Dossier with the ruling, confidence, minority report, and full trace.
+> 這是一個基於 [fshiori/magi](https://github.com/fshiori/magi) 的 Fork 專案。  
+> 原版 MAGI 使用三個便宜模型；我們相信透過三個頂級且「異質化」的模型對抗，能觸及單一模型無法達到的邏輯巔峰。
 
-![NERV Command Center](docs/nerv-dashboard.png)
+---
 
-## Why?
+## 🛰️ 專案願景 (Vision)
+傳統的投票機制容易陷入「集體平庸」。本專案旨在將 **MAGI** 的結構化辯論協議（ICE）應用於目前世界上最強的三個不同體系：
+* **Melchior (ChatGPT/GPT-4o mini):** 代表通用邏輯與穩定性。
+* **Balthasar (Gemini 1.5 Pro):** 代表廣大的脈絡理解與跨模態洞察。
+* **Casper (DeepSeek V3):** 代表強悍的數理推理與性價比極限。
 
-> "Three cobblers with their wits combined equal Zhuge Liang, the master mind."
+---
 
-In our latest **MMLU (Massive Multitask Language Understanding)** "Hell Mode" benchmark:
-- **Single Strong Model** (Claude Sonnet 4.6): **83.3%**
-- **MAGI Critique** (3x Cheap Models*): **83.3%** 🤝 **(MATCHED)**
+## 🗺️ 啟動路徑 (Roadmap)
 
-*Models: Xiaomi Mimo-v2-pro, MiniMax-m2.7, DeepSeek-v3.2. Note: MAGI achieves the same accuracy as the world's leading model by leveraging collective intelligence through multi-round debate.*
+目前的狀態是：**[預研與規劃階段]**。以下是預計開發的里程碑：
 
-The value: MAGI allows you to achieve **State-of-the-Art (SOTA) performance** using significantly smaller/cheaper nodes by enabling them to catch each other's logic gaps and hallucinations.
+### 🏁 Phase 1: 基礎對接 (Base Integration)
+- [ ] **多 API 介面適配:** 支援 OpenRouter 統一調用或各家 SDK 獨立串接。
+- [ ] **環境變數重構:** 支援同時載入 `OPENAI_API_KEY`, `GEMINI_API_KEY`, 與 `DEEPSEEK_API_KEY`。
+- [ ] **Persona 定義:** 針對這三個模型的特性重新設計「人格預設」。
 
-## How MAGI Differs
+### ⚔️ Phase 2: 核心引擎優化 (Engine Tuning)
+- [ ] **Reasoning Content 提取:** 專門針對 DeepSeek 的思維鏈（Think Tag）進行結構化解析。
+- [ ] **跨模型權重演算法:** 根據任務類型（Code/Logic/Creative）調整三個模型的投票權重。
+- [ ] **Token 成本追蹤:** 即時計算這三巨頭辯論一次到底要花多少錢。
 
-There are several EVA-inspired multi-model projects. Here's what makes this one different.
+### 🖥️ Phase 3: 視覺化與工具 (UI/UX)
+- [ ] **NERV Dashboard 適配:** 確保三種不同廠牌的模型在儀表板上顯示各自的 Logo 與狀態。
+- [ ] **CLI 強化:** 支援 `magi-but ask --trio` 直接啟動三巨頭對戰。
 
-**Other projects do voting.** Three models answer, pick the majority. That's it.
+---
 
-**MAGI does structured disagreement.** Models don't just answer in parallel. They read each other's answers, critique the reasoning, and revise their positions across multiple rounds. The system tracks who changed their mind and why.
-
-| Capability | Voting projects | MAGI |
-|---|---|---|
-| Multi-model query | Yes | Yes |
-| Majority vote | Yes | Yes |
-| **Multi-round critique (ICE)** | No | Yes |
-| **Mind change tracking** | No | Yes |
-| **Adaptive protocol selection** | No | Yes |
-| **Minority report / dissent analysis** | No | Yes |
-| **Benchmark: ensemble >= single model** | No | Yes (83% vs 83%) |
-| **Fault tolerance (node failures)** | No | Yes |
-| **NERV hexagonal dashboard** | No | Yes |
-| **CLI toolchain (diff, judge, bench)** | No | Yes |
-
-The key finding: **MAGI enables cheap models to reach the "Sonnet Ceiling"**. While single strong models are elite, MAGI's critique mode allows an ensemble of much cheaper models to reach the same level of accuracy (83.3%) by catching mistakes in high-stakes reasoning tasks.
-
-## Install
+## 🛠️ 安裝與使用 (Coming Soon)
+目前專案處於 WIP 狀態，尚未發布至 PyPI。
 
 ```bash
-pip install magi-system
-```
+# 開發者模式安裝
+git clone [https://github.com/你的帳號/magi-but-chatgpt-gemini-deepseek.git](https://github.com/你的帳號/magi-but-chatgpt-gemini-deepseek.git)
+cd magi-but-chatgpt-gemini-deepseek
+pip install -e .
 
-Or from source:
+📜 聲明
+此專案純屬技術研究，旨在探索不同 LLM 供應商之間的「集體智慧」極限。
+Inspired by Neon Genesis Evangelion.
+God's in his heaven. All's right with the world.
 
-```bash
-git clone https://github.com/fshiori/magi.git
-cd magi
-uv venv && uv pip install -e ".[dev]"
-```
-
-## Quick Start
-
-```bash
-# Set your API key (OpenRouter gives you access to all models with one key)
-export OPENROUTER_API_KEY=sk-or-...
-
-# Ask a question — three models debate, one decision emerges
-magi ask "Should we use microservices or a monolith?"
-
-# Multi-model code review (the killer use case)
-magi diff --staged
-
-# Critique mode: models debate until consensus (slower, higher quality)
-magi ask "Is Rust better than Go for backend services?" --mode critique
-
-# Adaptive mode: auto-selects vote/critique/escalate based on disagreement
-magi ask "What caused the 2008 financial crisis?" --mode adaptive
-
-# Multi-model answer scoring
-magi judge -q "What is quantum entanglement?" -a "It means particles are connected"
-
-# NERV Command Center — real-time dashboard
-pip install magi-system[web]
-magi dashboard
-
-# Run benchmark, view analytics, replay decisions
-magi bench --dataset mmlu:abstract_algebra --use-judge
-magi analytics
-magi replay <trace-id>
-
-# List persona presets
-magi presets
-```
-
-## Protocols
-
-| Protocol | When to use | How it works |
-|----------|-------------|--------------|
-| `vote` | Fast answers, clear-cut questions | Parallel query, structured position extraction, majority wins |
-| `critique` | Complex or controversial questions | Multi-round debate (ICE), models critique each other until consensus |
+---
 | `escalate` | Forced decision on high-disagreement topics | Critique with 2-round limit, highest-trust node makes final call |
 | `adaptive` | Default for most use cases | Auto-selects based on agreement score: high=vote, medium=critique, low=escalate |
 
