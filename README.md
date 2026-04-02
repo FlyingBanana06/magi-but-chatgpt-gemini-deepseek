@@ -11,8 +11,8 @@
 
 ## 🛰️ 專案願景 (Vision)
 傳統的投票機制容易陷入「集體平庸」。本專案旨在將 **MAGI** 的結構化辯論協議（ICE）應用於目前世界上最強的三個不同體系：
-* **Melchior (ChatGPT/GPT-4o mini):** 代表通用邏輯與穩定性。
-* **Balthasar (Gemini 1.5 Pro):** 代表廣大的脈絡理解與跨模態洞察。
+* **Melchior (Gemini 1.5 Pro):** 代表廣大的脈絡理解與跨模態洞察。
+* **Balthasar (ChatGPT/GPT-4o mini):** 代表通用邏輯與穩定性。
 * **Casper (DeepSeek V3):** 代表強悍的數理推理與性價比極限。
 
 ---
