@@ -45,6 +45,7 @@
 git clone [https://github.com/你的帳號/magi-but-chatgpt-gemini-deepseek.git](https://github.com/你的帳號/magi-but-chatgpt-gemini-deepseek.git)
 cd magi-but-chatgpt-gemini-deepseek
 pip install -e .
+```
 
 📜 聲明
 此專案純屬技術研究，旨在探索不同 LLM 供應商之間的「集體智慧」極限。
