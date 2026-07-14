@@ -15,7 +15,7 @@ from magi.core.node import MagiNode, MELCHIOR, BALTHASAR, CASPER
 
 def test_builtin_dataset_exists():
     questions = get_dataset("builtin")
-    assert len(questions) == 25
+    assert len(questions) == 50
 
 
 def test_builtin_categories():

@@ -9,3 +9,5 @@ build/
 *.egg
 .env
 .gstack/
+
+AI_Dev_Log/
