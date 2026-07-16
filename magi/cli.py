@@ -5,7 +5,8 @@ import sys
 import click
 
 from magi.core.engine import MAGI
-from magi.core.node import MELCHIOR, BALTHASAR, CASPER, AuthenticationError
+from magi.core.node import MELCHIOR, BALTHASAR, CASPER
+from magi.core.errors import AuthenticationError
 from magi.commands.diff import (
     get_git_diff,
     check_diff_size,

@@ -1,5 +1,6 @@
 from magi.core.node import MagiNode, Persona, MELCHIOR, BALTHASAR, CASPER
 from magi.core.decision import Decision
+from magi.core.errors import AuthenticationError
 from magi.protocols.vote import vote
 from magi.protocols.critique import critique
 from magi.protocols.adaptive import adaptive

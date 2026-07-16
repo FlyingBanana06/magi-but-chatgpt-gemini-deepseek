@@ -1,6 +1,8 @@
 from dataclasses import dataclass
-import asyncio
-import litellm
+from typing import Optional
+
+from magi.core.errors import AuthenticationError
+from magi.providers.base import BaseProvider
 
 
 @dataclass
@@ -24,38 +26,31 @@ CASPER = Persona("Casper", "You think like a pragmatic realist. Prioritize feasi
 
 
 class MagiNode:
-    def __init__(self, name: str, model: str, persona: Persona, timeout: float = 60.0):
+    def __init__(
+        self,
+        name: str,
+        model: str,
+        persona: Persona,
+        timeout: float = 60.0,
+        provider: Optional[BaseProvider] = None,
+    ):
         self.name = name
         self.model = model
         self.persona = persona
         self.timeout = timeout
+        self.provider = provider
+        if self.provider is None:
+            from magi.providers.factory import create_provider
+            self.provider = create_provider("litellm", model=model, persona=persona, timeout=timeout)
 
     async def query(self, prompt: str) -> str:
-        """Send a query to this node's LLM. Returns the response text or raises on failure."""
+        """Send a query to this node's provider. Returns the response text or raises on failure."""
         try:
-            response = await asyncio.wait_for(
-                litellm.acompletion(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": self.persona.system_prompt},
-                        {"role": "user", "content": prompt},
-                    ],
-                    num_retries=3,
-                ),
-                timeout=self.timeout,
-            )
-            msg = response.choices[0].message
-            content = msg.content
-            # Reasoning models (e.g. MiniMax M2.7) put output in reasoning_content
-            if not content and hasattr(msg, "reasoning_content") and msg.reasoning_content:
-                content = msg.reasoning_content
-            if not content or not content.strip():
-                raise ValueError(f"Node {self.name} returned empty response")
-            return content.strip()
-        except asyncio.TimeoutError:
+            return await self.provider.ask(prompt, system_prompt=self.persona.system_prompt, timeout=self.timeout)
+        except TimeoutError:
             print(f"Node {self.name} ({self.model}) TIMEOUT after {self.timeout}s")
             raise TimeoutError(f"Node {self.name} ({self.model}) timed out after {self.timeout}s")
-        except litellm.AuthenticationError as e:
+        except AuthenticationError as e:
             print(f"Node {self.name} ({self.model}) AUTH ERROR: {e}")
             raise AuthenticationError(
                 f"Node {self.name} authentication failed. "
@@ -66,5 +61,3 @@ class MagiNode:
             raise e
 
 
-class AuthenticationError(Exception):
-    pass
